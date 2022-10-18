@@ -1,9 +1,13 @@
 
 <template>
   <h1>task app</h1>
+  <NavBar />
+  <router-view></router-view>
+
 </template>
 <script setup>
-console.log(process.env.NODE_ENV)
+import NavBar from '../src/components/NavBar.vue'
+console.log(import.meta.env.BASE_URL)
 </script>
 <style scoped>
 </style>
