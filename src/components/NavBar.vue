@@ -1,7 +1,7 @@
 <template>
     <nav>
-        <router-link :to="{name: 'home'}">Home</router-link><br>
-        <router-link :to="{name: 'login'}">Login</router-link>
+        <router-link :to="{name: 'auth'}">auth page</router-link>
+        
     </nav>
 </template>
 <script setup>
