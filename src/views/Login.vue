@@ -12,6 +12,9 @@
               type="email"
               placeholder="email"
             />
+            <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+            </span>
             <p v-if="emailError" class="help is-danger">
               email adress not found?
             </p>
@@ -45,6 +48,34 @@
         >Create an account</router-link></div>
     </div>
   </div>
+
+  <div class="field">
+  <label class="label">Normal input</label>
+  <div class="control has-icons-left has-icons-right">
+    <input class="input" type="email" placeholder="Extra small">
+    <span class="icon is-small is-left">
+      <i class="fas fa-envelope fa-xs"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-check fa-xs"></i>
+    </span>
+  </div>
+</div>
+
+<div class="field">
+  <div class="control has-icons-left has-icons-right">
+    <input class="input" type="email" placeholder="Normal">
+    <span class="icon is-left">
+      <i class="fas fa-envelope"></i>
+    </span>
+    <span class="icon is-right">
+      <i class="fas fa-check"></i>
+    </span>
+  </div>
+</div>
+
+  
+
 </template>
 <script setup>
 import { ref } from "vue";
@@ -58,6 +89,7 @@ const email = ref("");
 const emailError = ref(false);
 const password = ref("");
 const passwordError = ref(false);
+
 
 const onSubmit = async () => {
   if (validarMail(email) === true) emailError.value = false;
@@ -86,6 +118,7 @@ const onSubmit = async () => {
 
       // Nos redirige al home
       router.push({ name: "home" });
+
     }
   }
 };

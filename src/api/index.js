@@ -8,6 +8,7 @@ export const registro = async (email, password) => {
     password
     // TODO: identificar el result y retornar lo que nos interesa (enviar mensaje si algo no esta bien completo, etc)
     })
+    console.log(result)
     if (result.error) return false
     else return true;
 }
@@ -39,6 +40,9 @@ export const newTask = async (task) => {
     //   description: 'descripcion del task'
     
     console.log(response)
+    if (response.error) return false
+    else return true;
+
   }
   
 
@@ -50,7 +54,9 @@ export const getTasks = async () => {
     .from('task')
     .select('*')
     .order('id', {ascending: false})
-    console.log(response)
+    if (response.error) return false
+    // el .data de donde sale?
+    else return response.data;
     // TODO retornar la informacion de los tasks, ej response.data
   }
 
@@ -62,8 +68,10 @@ export const updateTask = async (taskId, task) => {
     .update(task)
     .eq('id', taskId)
 
+    if (response.error) return false
+    else return true;  
     // TODO identificar el resultado y...
-    console.log(response)
+    
   }
   
 
@@ -74,10 +82,14 @@ export const deleteTask = async (taskId) => {
     .delete()
     .eq('id', taskId)
     console.log(response)
+    if (response.error) return false
+    else return true; 
   }
 
 export const logOut = async () => {
     const response = await supabase.auth.signOut()
+    if (response.error) return false
+    else return true; 
     // TODO identificar resultado y retornar lo que nos interesa, port ej true si ha ido bien y false si ha fallado
 }
   

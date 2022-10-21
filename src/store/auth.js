@@ -19,7 +19,9 @@ export const useAuthStore = defineStore('auth', {
         // TODO cambiar el estado de atentificacion e id del usuario
     },
     logout() {
-        // TODO cambiar el estado de autentificacion e id del usuario
+      this.id = undefined,
+      this.isAuth = false
+        
     }
   },
   persist: {
