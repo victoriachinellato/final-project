@@ -1,5 +1,10 @@
 <template>
   <h1>this is home</h1>
+  
+  <button class="button" @click="clickToFilter3">all tasks</button>
+  <button class="button" @click="clickToFilter1">to do</button>
+  <button class="button" @click="clickToFilter2">done tasks</button>
+  
 
   <form class="box" @submit.prevent="onSubmit">
     <h1>Add a new task</h1>
@@ -15,7 +20,7 @@
 
   <div class="columns is-multiline">
     <div
-      v-for="task in taskStore.tasks"
+      v-for="task in tasks"
       class="column is-12-mobile is-4-tablet is-3-desktop"
       :key="task.id"
     >
@@ -28,7 +33,7 @@
  
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { logOut, getTasks, newTask, deleteTask } from "../api/index";
 import NavBar from "../components/NavBar.vue";
 import { useRouter } from "vue-router";
@@ -44,10 +49,16 @@ const title = ref("");
 const titleError = ref(false);
 const description = ref("");
 const descriptionError = ref(false);
+const filter = ref()
 
 
-
-// hace falta hacer ademas de la funcion getTasks gettingTasks?
+const tasks = computed(() => {
+        if (filter.value == 0)
+            return taskStore.tasks.filter(task => task.is_completed)
+        if (filter.value == 1)
+            return taskStore.tasks.filter(task => !task.is_completed)
+        return taskStore.tasks
+    })
 
 // OBTENER TAREAS:
 const gettingTasks = async () => {
@@ -96,6 +107,26 @@ const onClick = async () => {
     console.log("something went wrong");
   }
 };
+
+const clickToFilter1 = () => {
+    console.log(filter.value)
+    return filter.value = 0
+   
+}
+
+
+const clickToFilter2 = () => {
+    console.log(filter.value)
+    return filter.value = 1
+    
+}
+
+const clickToFilter3 = () => {
+    console.log(filter.value)
+    return filter.value = 3
+    
+}
+
 
 
 

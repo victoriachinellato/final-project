@@ -1,7 +1,5 @@
 
 <template>
-  <h1>task app</h1>
-
   <router-view></router-view>
 
 </template>
@@ -19,6 +17,7 @@ import { useRouter } from 'vue-router'
 const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY)
 const authStore = useAuthStore();
 const router = useRouter();
+
 
 // esta funcion esta bien implementada
 onMounted(async() => {
