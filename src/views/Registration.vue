@@ -64,11 +64,11 @@
   <!-- nuevo layout -->
 
 
-  <div class="container login-container">
+  <div class="login-container">
     <div class="box login-box">
       <form @submit.prevent="onSubmit">
-        <div class="field is-flex is-fullwidth">
-          <label class="label is-size-2 is-align-self-center">Registration</label>
+        <div class="field is-fullwidth">
+          <label class="label is-size-2 has-text-centered">Registration</label>
         </div>
         <!-- name -->
         <div class="field">
@@ -214,17 +214,26 @@ const validarMail = () => {
 // registro(name, password)
 </script>
 <style scoped>
-.login-box {
-  
-  margin: 200px;
+.login-container {
+  /* max-width: 350px; */
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   flex-direction: column;
-  justify-content: space-between;
-  
+  /* background-color: #ededed; */
+  background-color: #f8f8f8;
+}
+.login-box {
+  /* margin: 200px; */
+  max-width: 350px;
+  min-width: 40%;
+ 
+ 
   /* height: 50vh;
   width: 40vw; */
-
 }
+
 
 .login-button {
   background-color: #027373;

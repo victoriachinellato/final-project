@@ -5,6 +5,11 @@
   <button class="button" @click="clickToFilter3">all tasks</button>
   <button class="button" @click="clickToFilter1">to do</button>
   <button class="button" @click="clickToFilter2">done tasks</button> -->
+  <div class="is-flex is-justify-content-center p-5">
+    <progress class="progress progress-bar" value="0.2" max="1">25%</progress><br>
+    <div>{{progress}}</div>
+  </div>
+ 
   <div class="is-flex is-flex-direction-column  is-justify-content-center is-align-items-center">
     <button @click="toAddATask" class="button is-fullwidth m-5 add-button p-0">Add a new task</button>
 
@@ -27,8 +32,24 @@
     <li @click="clickToFilter1" :class="{'px-5 is-size-5': true, 'is-active': filter === 0}"><a>To do</a></li>
     <li @click="clickToFilter2" :class="{'px-5 is-size-5': true, 'is-active': filter === 1}"><a>Done</a></li>
     <li @click="clickToFilter3" :class="{'px-5 is-size-5': true, 'is-active': filter === 3}"><a>All</a></li>
-    
   </ul>
+  <div class="dropdown is-hoverable">
+  <div class="dropdown-trigger">
+    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+      <span>by time</span>
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+    <div class="dropdown-content">
+      <div class="dropdown-item">
+        <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
     
 <!-- <button @click="toAddATask" class="button m-5 add-button">Add a new task</button> -->
@@ -74,10 +95,26 @@ const description = ref("");
 const descriptionError = ref(false);
 const filter = ref()
 const toAdd = ref()
+const progressPorcentaje = ref()
+const toDo = ref()
+const done = ref()
+const progressBar = ref()
+
+
+
 
 const toAddATask = () => {
     return (toAdd.value = !toAdd.value)
 }
+
+const progress = computed(() => {
+    toDo.value = taskStore.tasks.filter(task => task.is_completed)
+    done.value = taskStore.tasks.filter(task => !task.is_completed)
+    return (done.value.length / toDo.value.length).toString()
+})
+console.log(progress.value)
+
+
 
 const tasks = computed(() => {
         if (filter.value == 0)
@@ -175,5 +212,9 @@ const clickToFilter3 = () => {
 
 .add-task-form {
     width: 40vw;
+}
+
+.progress-bar {
+    width: 80vw;
 }
 </style>
