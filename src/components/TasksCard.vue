@@ -60,9 +60,11 @@
 
     <!-- <input class="checkbox" type="checkbox" id="checkbox" v-model="checked"> -->
     <label v-if=task.is_completed class="radio m-4">
-    <input @click="clickToDone"
-    
-    type="radio" name="rsvp" class="is-large checkbox">
+        <i @click="clickToDone" class="fa-regular fa-circle ml-1 circle-icon"></i>
+        <i @click="clickToDone" class="fa-regular fa-circle-check ml-1 check-icon"></i>
+
+    <!-- <input @click="clickToDone"
+    type="radio" name="rsvp" class="check"> -->
     <!-- Done -->
   </label>
   </header>
@@ -81,7 +83,7 @@
   <footer class="card-footer">
     
     <div v-if=task.is_completed class="card-footer-item"> 
-        <button v-if=task.is_completed @click="clickToUpdate" class="button no-border-buttons">Edit</button>
+        <button v-if=task.is_completed @click="clickToUpdate" class="button no-border-buttons is-active">Edit</button>
     </div> 
     <div v-if=task.is_completed class="card-footer-item">
     <button v-if=task.is_completed  @click="deleteThisTask(task.id)" class="button no-border-buttons" >Delete</button>
@@ -92,6 +94,15 @@
     </div>
   </footer>
 </div>
+
+<!-- modal: va con una ref de true or false -->
+<!-- <div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    efvwefr
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div> -->
 
 <!-- editar tarea -->
 <div v-if="updateTask1" class="card">
@@ -111,12 +122,23 @@
     </div>
 
     <footer class="card-footer">
+        <div class="card-footer-item">
+        <button @click="updateThisTask(task.id, newDescription.value, newTitle.value)"  class="button no-border-buttons">Save</button>
+    </div>
+    <div class="card-footer-item">
+        <button @click="clickToUpdate" class="button no-border-buttons">Cancel</button>
+        
+    </div>
     
-    <a href="#" @click="updateThisTask(task.id, newDescription.value, newTitle.value)" class="card-footer-item">Save</a>
-    <a href="#" @click="clickToUpdate" class="card-footer-item">Cancel</a>
+    <!-- <a href="#" @click="updateThisTask(task.id, newDescription.value, newTitle.value)" class="card-footer-item">Save</a>
+    <a href="#" @click="clickToUpdate" class="card-footer-item">Cancel</a> -->
     
   </footer>
 
+
+  <!-- modal de bulma -->
+
+ 
 
 </div>
 </div>
@@ -184,6 +206,8 @@ const clickToDone = async () => {
   background-color: #f5f5f5!important; 
 }
 
+
+
 .checkbock {
     border: 2px solid green;
    
@@ -195,18 +219,35 @@ const clickToDone = async () => {
 
 .no-border-buttons {
     border: none;
+    
 }
 
-/* .buttonn {
-    border: none;
-    
-    
-} */
+.no-border-buttons:hover {
+    color: #0D0D0D;
+    font-weight: 500;
+}
 
 .date {
     margin-top: 20px;
     font-size: small;
     font-weight: 200;
 
+}
+
+.circle-icon {
+    font-size: larger;
+}
+
+/* .check-icon {
+    display: none;
+} */
+
+.circle-icon:hover .check-icon{
+    display: inline;
+    
+}
+
+.circle-icon:hover .circle-icon {
+    display: none;
 }
 </style>

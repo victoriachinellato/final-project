@@ -6,7 +6,7 @@
   <button class="button" @click="clickToFilter1">to do</button>
   <button class="button" @click="clickToFilter2">done tasks</button> -->
   <div class="is-flex is-justify-content-center p-5">
-    <progress class="progress progress-bar" value="0.2" max="1">25%</progress><br>
+    <progress class="progress progress-bar" :class="{'is-primary': progress < 0.25}" :value="progress" max="1">25%</progress><br>
     <div>{{progress}}</div>
   </div>
  
@@ -110,7 +110,7 @@ const toAddATask = () => {
 const progress = computed(() => {
     toDo.value = taskStore.tasks.filter(task => task.is_completed)
     done.value = taskStore.tasks.filter(task => !task.is_completed)
-    return (done.value.length / toDo.value.length).toString()
+    return (done.value.length / taskStore.tasks.length)
 })
 console.log(progress.value)
 
