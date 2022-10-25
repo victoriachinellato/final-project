@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <!-- <div class="section">
     <div class="box">
       <h1>LOG IN</h1>
       <form @submit.prevent="onSubmit">
@@ -13,7 +13,7 @@
               placeholder="email"
             />
             <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
+              <i class="fas fa-envelope"></i>
             </span>
             <p v-if="emailError" class="help is-danger">
               email adress not found?
@@ -42,40 +42,84 @@
           </div>
         </div>
       </form>
-      <!-- DIRIGIR AL USUARIO A LA VIEW DE REGISTRO -->
-      <div class="is-flex"><p>Not registered?</p>
-      <router-link class="has-text-weight-bold" :to="{ name: 'registration' }"
-        >Create an account</router-link></div>
+      
+
+      <div class="is-flex">
+        <p>Not registered?</p>
+        <router-link class="has-text-weight-bold" :to="{ name: 'registration' }"
+          >Create an account</router-link
+        >
+      </div>
+    </div>
+  </div> -->
+
+  <!-- nuevo layout -->
+  <div class="login-container">
+    <div class="box login-box">
+      <form @submit.prevent="onSubmit">
+        <div class="field is-fullwidth">
+          <label class="label is-size-2 has-text-centered">Log in</label>
+        </div>
+
+        <div class="field mt-5">
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="email"
+              :class="{input: true, 'is-danger': emailError }"
+              type="email"
+              placeholder="Email"
+            />
+            <span class="icon is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <span class="icon is-right">
+              <i class="fas fa-check"></i>
+            </span>
+            <p v-if="emailError" class="help is-danger">
+              email adress not found?
+            </p>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="password"
+              :class="{ input: true, 'is-danger': passwordError }"
+              type="password"
+              placeholder="Password"
+            />
+            <span class="icon is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+            <span class="icon is-right">
+              <i class="fas fa-check"></i>
+            </span>
+            <p v-if="passwordError" class="help is-danger">wrong password?</p>
+          </div>
+        </div>
+
+        <div class="field mt-5">
+          <div class="control">
+            <button class="button is-fullwidth is-primary"
+              type="submit"
+              placeholder="Log in"> Log in
+              
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="is-flex is-fullwidth is-justify-content-center mt-5">
+        <p class="mr-3">Not registered?</p>
+        <router-link
+          class="has-text-weight-bold register-link"
+          :to="{ name: 'registration' }"
+          >Create an account</router-link
+        >
+      </div>
     </div>
   </div>
-
-  <div class="field">
-  <label class="label">Normal input</label>
-  <div class="control has-icons-left has-icons-right">
-    <input class="input" type="email" placeholder="Extra small">
-    <span class="icon is-small is-left">
-      <i class="fas fa-envelope fa-xs"></i>
-    </span>
-    <span class="icon is-small is-right">
-      <i class="fas fa-check fa-xs"></i>
-    </span>
-  </div>
-</div>
-
-<div class="field">
-  <div class="control has-icons-left has-icons-right">
-    <input class="input" type="email" placeholder="Normal">
-    <span class="icon is-left">
-      <i class="fas fa-envelope"></i>
-    </span>
-    <span class="icon is-right">
-      <i class="fas fa-check"></i>
-    </span>
-  </div>
-</div>
-
-  
-
 </template>
 <script setup>
 import { ref } from "vue";
@@ -90,12 +134,10 @@ const emailError = ref(false);
 const password = ref("");
 const passwordError = ref(false);
 
-
 const onSubmit = async () => {
   if (validarMail(email) === true) emailError.value = false;
   else emailError.value = true;
-  if (password.value.length < 6) 
-    passwordError.value = true;
+  if (password.value.length < 6) passwordError.value = true;
   else passwordError.value = false;
   console.log("hasta aca bien");
 
@@ -103,22 +145,20 @@ const onSubmit = async () => {
     console.log("seguimos bien");
 
     // creo constante de login para almacenar su valor
-    
-    let loginResult = await login(email.value, password.value)
+
+    let loginResult = await login(email.value, password.value);
 
     if (loginResult === false) {
-    
       console.log("hubo errores");
     } else {
       console.log("no hubo errores");
       // aca deberia llamar a isAuth y cambiarla?
       // como guardar el id?
       authStore.login(loginResult);
-      console.log(authStore.id)
+      console.log(authStore.id);
 
       // Nos redirige al home
       router.push({ name: "home" });
-
     }
   }
 };
@@ -130,4 +170,35 @@ const validarMail = () => {
   } else return false;
 };
 </script>
-<style scoped></style>
+<style scoped>
+.login-box {
+  
+  /* margin: 200px; */
+  max-width: 350px;
+  min-width: 40%;
+ 
+  
+  /* height: 50vh;
+  width: 40vw; */
+ 
+}
+
+.login-container {
+  /* max-width: 350px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  
+
+
+  
+}
+
+.login-button {
+  background-color: #027373;
+}
+
+/* .register-link{
+  */
+</style>

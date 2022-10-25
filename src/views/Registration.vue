@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <!-- <div class="section">
     <div class="box has-background-success-light">
       <h1 class="title is-3">Registration</h1>
       <form @submit.prevent="onSubmit">
@@ -57,6 +57,100 @@
         <p>Have an account? </p>
         <router-link class="has-text-weight-bold" :to="{ name: 'login' }">LOGIN</router-link></div>
     </div>
+  </div> -->
+
+
+
+  <!-- nuevo layout -->
+
+
+  <div class="container login-container">
+    <div class="box login-box">
+      <form @submit.prevent="onSubmit">
+        <div class="field is-flex is-fullwidth">
+          <label class="label is-size-2 is-align-self-center">Registration</label>
+        </div>
+        <!-- name -->
+        <div class="field">
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="name"
+              :class="{ input: true, 'is-danger': nameError }"
+              type="text"
+              placeholder="Nombre"
+            />
+            <span class="icon is-left">
+              <i class="fas fa-user"></i>
+            </span>
+            <span class="icon is-right">
+              <i class="fas fa-check"></i>
+            </span>
+            <p v-if="nameError" class="help is-danger">Name is required</p>
+          </div>
+        </div>
+
+        <div class="field ">
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="email"
+              :class="{ input: true, 'is-danger': emailError }"
+              type="email"
+              placeholder="email"
+            />
+            <span class="icon is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <span class="icon is-right">
+              <i class="fas fa-check"></i>
+            </span>
+            <p v-if="emailError" class="help is-danger">
+              Insert a valid email address
+            </p>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control has-icons-left has-icons-right">
+            <input
+              v-model="password"
+              :class="{ input: true, 'is-danger': passwordError }"
+              type="password"
+              placeholder="password"
+            />
+            <span class="icon is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+            <span class="icon is-right">
+              <i class="fas fa-check"></i>
+            </span>
+            <p v-if="passwordError" class="help is-danger">
+              Password has to be at least 6 characters long
+            </p>
+          </div>
+        </div>
+
+        <div class="field mt-5">
+          <div class="control">
+            <button class="button is-link is-fullwidth login-button"
+              type="submit"
+              placeholder="Log in"> Register
+              
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="is-flex is-fullwidth is-justify-content-center mt-5">
+        <p class="mr-3">Have an account? </p>
+        <router-link class="has-text-weight-bold" :to="{ name: 'login' }">Log in</router-link>
+        
+      </div>
+
+
+      
+    </div>
+
+    
   </div>
 </template>
 <script setup>
@@ -119,4 +213,21 @@ const validarMail = () => {
 
 // registro(name, password)
 </script>
-<style scoped></style>
+<style scoped>
+.login-box {
+  
+  margin: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  /* height: 50vh;
+  width: 40vw; */
+
+}
+
+.login-button {
+  background-color: #027373;
+}
+
+</style>

@@ -25,7 +25,7 @@ export const formatRelativeTime = (date) => {
     let diff = Math.floor(new Date(date) - new Date());
     if (diff > 0) diff = 0
     const { seconds, minutes, hours, days } = getTimesFormat(diff);
-    const formatter = new Intl.RelativeTimeFormat('es-ES', {
+    const formatter = new Intl.RelativeTimeFormat('en-EN', {
         numeric: 'auto',
     })
     if (seconds > -60) return formatter.format(seconds, 'seconds')

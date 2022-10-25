@@ -1,34 +1,56 @@
 <template>
-  <h1>this is home</h1>
+    <NavBar />
+  <!-- <h1>this is home</h1>
   
   <button class="button" @click="clickToFilter3">all tasks</button>
   <button class="button" @click="clickToFilter1">to do</button>
-  <button class="button" @click="clickToFilter2">done tasks</button>
-  
+  <button class="button" @click="clickToFilter2">done tasks</button> -->
+  <div class="is-flex is-flex-direction-column  is-justify-content-center is-align-items-center">
+    <button @click="toAddATask" class="button is-fullwidth m-5 add-button p-0">Add a new task</button>
 
-  <form class="box" @submit.prevent="onSubmit">
-    <h1>Add a new task</h1>
-    <input v-model="title" class="input" type="text" placeholder="Title" />
+    <form v-if="toAdd" class="box m-5m add-task-form" @submit.prevent="onSubmit">
+    
+    <input v-model="title" class="input " type="text" placeholder="Title" />
     <textarea
       v-model="description"
-      class="textarea"
+      class="textarea mt-4"
       placeholder="Description"
     ></textarea>
-    <button class="button">Save</button>
+    <button class="button mt-4">Save</button>
   </form>
-  <h1>my tasks:</h1>
+</div>
 
-  <div class="columns is-multiline">
+  
+  <div class="is-flex is-justify-content-center">
+    <div class="tabs is-centered ">
+  <ul>
+    <li @click="clickToFilter1" :class="{'px-5 is-size-5': true, 'is-active': filter === 0}"><a>To do</a></li>
+    <li @click="clickToFilter2" :class="{'px-5 is-size-5': true, 'is-active': filter === 1}"><a>Done</a></li>
+    <li @click="clickToFilter3" :class="{'px-5 is-size-5': true, 'is-active': filter === 3}"><a>All</a></li>
+    
+  </ul>
+</div>
+    
+<!-- <button @click="toAddATask" class="button m-5 add-button">Add a new task</button> -->
+
+</div>
+  
+
+<div class="container tasks-section">
+  <div class="columns is-multiline is-flex is-justify-content-center">
     <div
       v-for="task in tasks"
       class="column is-12-mobile is-4-tablet is-3-desktop"
       :key="task.id"
     >
+    
       <TasksCard :task="task"/>
+    
     </div>
   </div>
+</div>
 
-  <button @click="onClick">LOG OUT</button>
+ 
   <!-- porque no puede ir el boton abajo del navbar? -->
  
 </template>
@@ -42,6 +64,7 @@ import { storeToRefs } from "pinia";
 import { useTaskStore } from "../store/task";
 import TasksCard from "../components/TasksCard.vue";
 
+
 const taskStore = useTaskStore();
 const authStore = useAuthStore();
 const router = useRouter();
@@ -50,7 +73,11 @@ const titleError = ref(false);
 const description = ref("");
 const descriptionError = ref(false);
 const filter = ref()
+const toAdd = ref()
 
+const toAddATask = () => {
+    return (toAdd.value = !toAdd.value)
+}
 
 const tasks = computed(() => {
         if (filter.value == 0)
@@ -132,4 +159,21 @@ const clickToFilter3 = () => {
 
 
 </script>
-<style scoped></style>
+<style scoped>
+.tasks-section {
+    margin: 30px;
+    
+}
+
+.add-button {
+    background-color:#027373;
+   width: 40vw;
+    color: #0D0D0D;
+    padding: 30px;
+    font-weight: 600;
+}
+
+.add-task-form {
+    width: 40vw;
+}
+</style>
