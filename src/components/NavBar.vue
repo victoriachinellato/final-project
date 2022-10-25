@@ -1,7 +1,7 @@
 <template>
     <nav class="is-flex is-justify-content-space-between p-2 nav-bar">
         <div>
-            <h1 class="is-size-3">Task App</h1>
+            <h1 class="is-size-3">Done</h1>
         </div>
         <!-- <button @click="toAddATask" class="button add-button">Add a new task</button> -->
         <button class="button logout-button" @click="onClick">LOG OUT</button>

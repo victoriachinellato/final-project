@@ -80,9 +80,16 @@
   </div>
   <footer class="card-footer">
     
-    <div v-if=task.is_completed @click="clickToUpdate" class="card-footer-item"> Edit</div> 
-    <div v-if=task.is_completed  @click="deleteThisTask(task.id)" class="card-footer-item">Delete</div>
-    <div v-if=!task.is_completed  @click="clickToDone" class="card-footer-item">Re do</div>
+    <div v-if=task.is_completed class="card-footer-item"> 
+        <button v-if=task.is_completed @click="clickToUpdate" class="button no-border-buttons">Edit</button>
+    </div> 
+    <div v-if=task.is_completed class="card-footer-item">
+    <button v-if=task.is_completed  @click="deleteThisTask(task.id)" class="button no-border-buttons" >Delete</button>
+    </div>
+    <div v-if=!task.is_completed  class="card-footer-item">
+        <button @click="clickToDone" class="button no-border-buttons">Do it again</button>
+        <i class="fas fa-rotate-right ml-1"></i>
+    </div>
   </footer>
 </div>
 
@@ -184,6 +191,10 @@ const clickToDone = async () => {
 
 .header {
     background-color: #A9D9D0;
+}
+
+.no-border-buttons {
+    border: none;
 }
 
 /* .buttonn {
