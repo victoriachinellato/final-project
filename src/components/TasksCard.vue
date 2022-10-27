@@ -1,53 +1,5 @@
 <template>
-  <!-- <article class="message">
-   
-
-    <div v-if="!updateTask1">
-      <div :class="{ 'message-header': true, 'done': !task.is_completed }">
-        <p>{{ task.title }}</p>
-        <button
-          @click="deleteThisTask(task.id)"
-          class="delete"
-          aria-label="delete"
-        ></button>
-      </div>
-
-      
-      <div :class="{ 'message-body': true, done: !task.is_completed }">
-        {{ task.description }}
-      </div>
-      <button v-if=task.is_completed @click="clickToDone" class="button">done</button>
-      <button v-if=task.is_completed @click="clickToUpdate" class="button">edit</button>
-      <button v-if=!task.is_completed @click="clickToDone" class="button">Re Do</button>
-    </div>
-
-    
-
-    <div v-if="updateTask1">
-      <input
-        v-model="newTitle"
-        class="input"
-        type="text"
-        placeholder="New Title"
-      />
-      <textarea
-        v-model="newDescription"
-        class="textarea"
-        placeholder="New Description"
-      ></textarea>
-      <button
-        @click="updateThisTask(task.id, newDescription.value, newTitle.value)"
-        class="button"
-      >
-        save
-      </button>
-      <button @click="clickToUpdate" class="button">cancel</button>
-    </div>
-  </article> -->
-
-
-  <!-- nuevo template  -->
-
+  
 
   <div class="card">
     <div v-if="!updateTask1" >
@@ -58,26 +10,29 @@
     </p>
     
 
-    <!-- <input class="checkbox" type="checkbox" id="checkbox" v-model="checked"> -->
-    <label v-if=task.is_completed class="radio m-4">
-        <i @click="clickToDone" class="fa-regular fa-circle ml-1 circle-icon"></i>
-        <i @click="clickToDone" class="fa-regular fa-circle-check ml-1 check-icon"></i>
+   
+    <label class="m-4">
+        
+        <i v-if=task.is_completed @click="clickToDone" class="radio fa-regular fa-circle-check ml-1 check-icon"></i>
+        <i  v-if=!task.is_completed class="fa-solid fa-circle-check ml-1 check-icon"></i>
+        
+        
 
-    <!-- <input @click="clickToDone"
-    type="radio" name="rsvp" class="check"> -->
-    <!-- Done -->
+   
   </label>
+
   </header>
-  <div :class="{ 'card-content': true, done: !task.is_completed }">
+  <div :class="{ 'card-content': true, 'done': !task.is_completed }">
     <div class="content">
         {{ task.description }}
       <br>
+      
 
       <div class="date">
       <time > {{dateAgo}}</time>
     </div>
 
-      <!-- <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time> -->
+      
     </div>
   </div>
   <footer class="card-footer">
@@ -86,7 +41,9 @@
         <button v-if=task.is_completed @click="clickToUpdate" class="button no-border-buttons is-active">Edit</button>
     </div> 
     <div v-if=task.is_completed class="card-footer-item">
-    <button v-if=task.is_completed  @click="deleteThisTask(task.id)" class="button no-border-buttons" >Delete</button>
+
+        <button class="button no-border-buttons" @click="modalDelete">Delete</button>
+    <!-- <button v-if=task.is_completed  @click="deleteThisTask(task.id)" class="button no-border-buttons" >Delete</button> -->
     </div>
     <div v-if=!task.is_completed  class="card-footer-item">
         <button @click="clickToDone" class="button no-border-buttons">Do it again</button>
@@ -96,13 +53,19 @@
 </div>
 
 <!-- modal: va con una ref de true or false -->
-<!-- <div class="modal is-active">
+<div class="modal" :class="{'is-active': toDelete}">
   <div class="modal-background"></div>
   <div class="modal-content">
-    efvwefr
+    <div class="box modal-box">
+    <h1 class="has-text-weight-bold is-size-5">Are you sure you want to delete this task?</h1>
+    <div class=" m-5">
+    <button class="button m-2" @click="deleteThisTask(task.id)">Delete</button>
+    <button class="button m-2"  @click="modalDelete">Cancel</button>
+</div>
+</div>
   </div>
   <button class="modal-close is-large" aria-label="close"></button>
-</div> -->
+</div>
 
 <!-- editar tarea -->
 <div v-if="updateTask1" class="card">
@@ -136,7 +99,7 @@
   </footer>
 
 
-  <!-- modal de bulma -->
+ 
 
  
 
@@ -156,6 +119,11 @@ const newDescription = ref(props.task.description);
 const taskStore = useTaskStore();
 const updateTask1 = ref(false);
 const doneTask = ref();
+const toDelete = ref(false)
+
+const modalDelete = () => {
+    return (toDelete.value = !toDelete.value)
+}
 
 const gettingTasks = async () => {
   const response = await getTasks();
@@ -169,7 +137,6 @@ const deleteThisTask = async (id) => {
 };
 
 const clickToUpdate = () => {
-  console.log(updateTask1.value);
   return (updateTask1.value = !updateTask1.value);
 };
 
@@ -200,12 +167,18 @@ const clickToDone = async () => {
 };
 </script>
 <style scoped>
+@import 'animate.css';
 .done {
   text-decoration: line-through;
   color: grey;
   background-color: #f5f5f5!important; 
 }
 
+.succes-task {
+    background-image: url("../../images/logoleave.png") !important;
+    text-decoration: line-through;
+    background-color: #A9D9D0 !important;
+}
 
 
 .checkbock {
@@ -215,6 +188,7 @@ const clickToDone = async () => {
 
 .header {
     background-color: #A9D9D0;
+   
 }
 
 .no-border-buttons {
@@ -227,6 +201,10 @@ const clickToDone = async () => {
     font-weight: 500;
 }
 
+.modal {
+    z-index: 5;
+}
+
 .date {
     margin-top: 20px;
     font-size: small;
@@ -234,20 +212,20 @@ const clickToDone = async () => {
 
 }
 
-.circle-icon {
+.check-icon {
     font-size: larger;
 }
 
-/* .check-icon {
-    display: none;
-} */
 
-.circle-icon:hover .check-icon{
-    display: inline;
-    
+
+
+.modal-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
 }
 
-.circle-icon:hover .circle-icon {
-    display: none;
-}
+
 </style>

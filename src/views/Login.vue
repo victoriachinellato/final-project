@@ -1,57 +1,5 @@
 <template>
-  <!-- <div class="section">
-    <div class="box">
-      <h1>LOG IN</h1>
-      <form @submit.prevent="onSubmit">
-        <div class="field">
-          <label class="label">Email</label>
-          <div class="control">
-            <input
-              v-model="email"
-              :class="{ input: true, 'is-danger': emailError }"
-              type="email"
-              placeholder="email"
-            />
-            <span class="icon is-small is-left">
-              <i class="fas fa-envelope"></i>
-            </span>
-            <p v-if="emailError" class="help is-danger">
-              email adress not found?
-            </p>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Password</label>
-          <div class="control">
-            <input
-              v-model="password"
-              :class="{ input: true, 'is-danger': passwordError }"
-              type="password"
-              placeholder="password"
-            />
-            <p v-if="passwordError" class="help is-danger">wrong password?</p>
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <input
-              class="button is-link"
-              type="submit"
-              placeholder="Text input"
-            />
-          </div>
-        </div>
-      </form>
-      
-
-      <div class="is-flex">
-        <p>Not registered?</p>
-        <router-link class="has-text-weight-bold" :to="{ name: 'registration' }"
-          >Create an account</router-link
-        >
-      </div>
-    </div>
-  </div> -->
+ 
 
   <!-- nuevo layout -->
   <div class="login-container">
@@ -65,10 +13,10 @@
 
     <div class="box login-box">
 
-      <div class="welcome is-flex">
+      <div class="welcome ">
       <img src="../../images/logoleave.png" alt="" srcset="" class="logo" />
       <div class="m-4">
-        <h2 class="is-size-4">Welcome to Done</h2>
+        <h2 class="is-size-4">Welcome to Progress</h2>
         <p>Log in to Sync</p>
       </div>
     </div>
@@ -93,7 +41,7 @@
               <i class="fas fa-check"></i>
             </span>
             <p v-if="emailError" class="help is-danger">
-              email adress not found?
+              this field is obligatory
             </p>
           </div>
         </div>
@@ -135,7 +83,7 @@
       <div class="is-flex is-fullwidth is-justify-content-center mt-5">
         <p class="mr-3">Not registered?</p>
         <router-link
-          class="has-text-weight-bold register-link"
+          class="has-text-weight-bold register-link my-link"
           :to="{ name: 'registration' }"
           >Create an account</router-link
         >
@@ -146,8 +94,8 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { login, registro } from "../api/index";
+import { createRouterMatcher, useRouter } from "vue-router";
+import { login, getUser } from "../api/index";
 import { useAuthStore } from "../store/auth";
 
 const authStore = useAuthStore();
@@ -168,21 +116,20 @@ const onSubmit = async () => {
   if (emailError.value === false && passwordError.value === false) {
     console.log("seguimos bien");
 
-    // creo constante de login para almacenar su valor
-
     let loginResult = await login(email.value, password.value);
 
     if (loginResult === false) {
       console.log("hubo errores");
       return errorMessage.value = true;
     } else {
-      console.log("no hubo errores");
-      // aca deberia llamar a isAuth y cambiarla?
-      // como guardar el id?
-      authStore.login(loginResult);
-      console.log(authStore.id);
 
-      // Nos redirige al home
+      let user = await getUser()
+      authStore.login(loginResult);
+
+      if (user.length === 0) {
+        router.push({name: 'user'})
+      } else authStore.saveUser(user[0])
+
       router.push({ name: "home" });
     }
   }
@@ -225,11 +172,23 @@ const validarMail = () => {
 .logo {
   width: 80px;
 }
-/* .register-link{
-  */
+
+.my-link {
+  /* color:#0D0D0D; */
+  color: hsl(0deg, 0%, 29%);
+  text-decoration: underline;
+}
+
+.my-link:hover {
+  color:#0D0D0D;
+  
+}
 
 .welcome {
   align-items: center;
   font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

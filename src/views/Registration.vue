@@ -1,74 +1,14 @@
 <template>
-  <!-- <div class="section">
-    <div class="box has-background-success-light">
-      <h1 class="title is-3">Registration</h1>
-      <form @submit.prevent="onSubmit">
-        <div class="field">
-          <label class="label">Name</label>
-          <div class="control">
-            <input
-              v-model="name"
-              :class="{ input: true, 'is-danger': nameError }"
-              type="text"
-              placeholder="Nombre"
-            />
-            <p v-if="nameError" class="help is-danger">Name is required</p>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Email</label>
-          <div class="control">
-            <input
-              v-model="email"
-              :class="{ input: true, 'is-danger': emailError }"
-              type="email"
-              placeholder="email"
-            />
-            <p v-if="emailError" class="help is-danger">
-              Insert a valid email address
-            </p>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Password</label>
-          <div class="control">
-            <input
-              v-model="password"
-              :class="{ input: true, 'is-danger': passwordError }"
-              type="password"
-              placeholder="password"
-            />
-            <p v-if="passwordError" class="help is-danger">
-              Password has to be at least 6 characters long
-            </p>
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <input
-              class="button is-link"
-              type="submit"
-              placeholder="Text input"
-            />
-          </div>
-        </div>
-      </form>
-      <div class="is-flex"> 
-        <p>Have an account? </p>
-        <router-link class="has-text-weight-bold" :to="{ name: 'login' }">LOGIN</router-link></div>
-    </div>
-  </div> -->
-
-
-
+  
   <!-- nuevo layout -->
 
 
   <div class="login-container">
     <div class="box login-box">
       <form @submit.prevent="onSubmit">
-        <div class="field is-fullwidth">
-          <label class="label is-size-2 has-text-centered">Registration</label>
+        <div class="field is-fullwidth registration-logo">
+          <img src="../../images/logoleave.png" alt="" srcset="" class="logo" />
+          <label class="label is-size-2 has-text-centered ml-4">Registration</label>
         </div>
         <!-- name -->
         <div class="field">
@@ -131,7 +71,7 @@
 
         <div class="field mt-5">
           <div class="control">
-            <button class="button is-link is-fullwidth login-button"
+            <button class="button is-fullwidth login-button is-primary"
               type="submit"
               placeholder="Log in"> Register
               
@@ -142,7 +82,7 @@
 
       <div class="is-flex is-fullwidth is-justify-content-center mt-5">
         <p class="mr-3">Have an account? </p>
-        <router-link class="has-text-weight-bold" :to="{ name: 'login' }">Log in</router-link>
+        <router-link class="has-text-weight-bold my-link" :to="{ name: 'login' }">Log in</router-link>
         
       </div>
 
@@ -239,4 +179,24 @@ const validarMail = () => {
   background-color: #027373;
 }
 
+.my-link {
+  /* color:#0D0D0D; */
+  color: hsl(0deg, 0%, 29%);
+  text-decoration: underline;
+}
+
+.my-link:hover {
+  color:#0D0D0D;
+  
+}
+
+.logo {
+  width: 60px;
+}
+
+.registration-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>

@@ -13,11 +13,13 @@ import { useRouter } from 'vue-router'
 
 
 
+
 // esto nos crea un objeto que nos permtite interactuar con supabase:
 const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY)
 const authStore = useAuthStore();
 const router = useRouter();
 
+console.log(router.currentRoute.value.name)
 
 // esta funcion esta bien implementada
 onMounted(async() => {

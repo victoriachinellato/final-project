@@ -9,19 +9,25 @@ export const useAuthStore = defineStore('auth', {
       isAuth: false,
     //   guardaremos el login de supabase al ahcer el login
       id: undefined,
-      email: undefined
+      email: undefined,
+      user: undefined
     }
   }, 
   actions: {
     login(id) {
         this.id = id
         this.isAuth = true
+  
         // TODO cambiar el estado de atentificacion e id del usuario
     },
     logout() {
       this.id = undefined,
-      this.isAuth = false
+      this.isAuth = false,
+      this.user = undefined
         
+    },
+    saveUser(user) {
+      this.user = user
     }
   },
   persist: {

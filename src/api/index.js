@@ -13,6 +13,39 @@ export const registro = async (email, password) => {
     else return true;
 }
 
+// esto te da el usuario
+export const getUser = async () => {
+  const response = await supabase
+    .from('users')
+    .select('*')
+    if (response.error) return false
+    else return response.data;
+}
+
+export const saveUser = async (user) => {
+  console.log(user)
+  const response = await supabase
+  .from('users')
+  // esto te actualiza si existe y sino lo crea
+  .insert(user)
+  console.log(response)
+  if (response.error) return false
+  
+  else return true;
+  
+}
+
+export const updateUser = async (userId, user) => {
+  const response = await supabase
+    .from ('users')
+    .update(user)
+    .eq('id', userId)
+    if (response.error) return false
+    else return true;  
+
+}
+
+
 
 
 // para el login
@@ -35,10 +68,6 @@ export const login = async (email, password) => {
 export const newTask = async (task) => {
     const response = await supabase.from('task')
     .insert(task)
-    //   user_id: id,
-    //   title: 'titulo',
-    //   description: 'descripcion del task'
-    
     console.log(response)
     if (response.error) return false
     else return true;

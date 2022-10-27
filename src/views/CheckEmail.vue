@@ -10,7 +10,7 @@
     
 
 <img src="../../images/logoleave.png" alt="" srcset="" class="logo" />
-<router-link class="has-text-weight-bold m-3 is-size-5" :to="{ name: 'login' }">Log in</router-link>
+<router-link class="has-text-weight-bold m-3 is-size-5 my-link" :to="{ name: 'login' }">Log in</router-link>
 </div>
 
 </div>
@@ -36,6 +36,17 @@
 
 .logo {
   width: 40px;
+}
+
+.my-link {
+  /* color:#0D0D0D; */
+  color: hsl(0deg, 0%, 29%);
+  text-decoration: underline;
+}
+
+.my-link:hover {
+  color:#0D0D0D;
+  
 }
 
 .login-logo{

@@ -1,28 +1,37 @@
 <template>
+    <div class="home-container" :class="{'home-conteiner-succes': progress === 1}">
+
+    
     <NavBar />
   <!-- <h1>this is home</h1>
+    
   
   <button class="button" @click="clickToFilter3">all tasks</button>
   <button class="button" @click="clickToFilter1">to do</button>
   <button class="button" @click="clickToFilter2">done tasks</button> -->
-  <div class="is-flex is-justify-content-center p-5">
-    <progress class="progress progress-bar" :class="{'is-primary': progress < 0.25}" :value="progress" max="1">25%</progress><br>
-    <div>{{progress}}</div>
+  <div class="progress-bar-div">
+    <div class="has-text-weight-bold is-size-5 m-4" >{{(progress * 100).toFixed(0)}}% Tasks completed</div>
+    <progress class="progress progress-bar" :class="{'is-danger': progress < 0.25, 'is-dark': progress < 0.4, 'is-warning': progress < 0.6, 'is-light':progress < 1, 'is-success': progress === 1}" :value="progress" max="1">25%</progress><br>
+    
   </div>
  
   <div class="is-flex is-flex-direction-column  is-justify-content-center is-align-items-center">
-    <button @click="toAddATask" class="button is-fullwidth m-5 add-button p-0">Add a new task</button>
+    <button @click="toAddATask" class="button is-fullwidth m-5 add-button p-0 animate__animated animate__fadeIn ">Add a new task</button>
 
-    <form v-if="toAdd" class="box m-5m add-task-form" @submit.prevent="onSubmit">
+    <form v-if="toAdd" class="box m-5m add-task-form card animate__animated animate__fadeIn" @submit.prevent="onSubmit">
     
-    <input v-model="title" class="input " type="text" placeholder="Title" />
+    <input v-model="title" class="input" :class="{'is-danger': titleError}" type="text" placeholder="Title" />
     <textarea
       v-model="description"
-      class="textarea mt-4"
+      class="textarea mt-4" :class="{'is-danger': descriptionError}"
       placeholder="Description"
     ></textarea>
-    <button class="button mt-4">Save</button>
+    <div class="add-task-buttons">
+    <button class="button save-button">Save</button>
+    <button @click="toAddATask" class="button cancel-button">Cancel</button>
+</div>
   </form>
+  
 </div>
 
   
@@ -33,7 +42,9 @@
     <li @click="clickToFilter2" :class="{'px-5 is-size-5': true, 'is-active': filter === 1}"><a>Done</a></li>
     <li @click="clickToFilter3" :class="{'px-5 is-size-5': true, 'is-active': filter === 3}"><a>All</a></li>
   </ul>
-  <div class="dropdown is-hoverable">
+
+
+  <!-- <div class="dropdown is-hoverable">
   <div class="dropdown-trigger">
     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
       <span>by time</span>
@@ -49,7 +60,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 </div>
     
 <!-- <button @click="toAddATask" class="button m-5 add-button">Add a new task</button> -->
@@ -57,7 +68,7 @@
 </div>
   
 
-<div class="container tasks-section">
+<div class="container tasks-section animate__animated animate__fadeIn">
   <div class="columns is-multiline is-flex is-justify-content-center">
     <div
       v-for="task in tasks"
@@ -70,9 +81,9 @@
     </div>
   </div>
 </div>
-
+</div>
  
-  <!-- porque no puede ir el boton abajo del navbar? -->
+ 
  
 </template>
 <script setup>
@@ -103,14 +114,18 @@ const progressBar = ref()
 
 
 
+
 const toAddATask = () => {
+    titleError.value = false
+    descriptionError.value = false
     return (toAdd.value = !toAdd.value)
 }
 
 const progress = computed(() => {
     toDo.value = taskStore.tasks.filter(task => task.is_completed)
     done.value = taskStore.tasks.filter(task => !task.is_completed)
-    return (done.value.length / taskStore.tasks.length)
+    if (taskStore.tasks.length > 0 ) return (done.value.length / taskStore.tasks.length)
+    else return 0
 })
 console.log(progress.value)
 
@@ -210,11 +225,74 @@ const clickToFilter3 = () => {
     font-weight: 600;
 }
 
+.progress-bar-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.progress-bar {
+    width: 70vw;
+}
 .add-task-form {
     width: 40vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.progress-bar {
-    width: 80vw;
+.add-task-buttons {
+    display: flex;
+    
+   
+
+}
+
+.home-conteiner-succes {
+    background-color:#95EBA7 !important;
+}
+.home-container {
+    background-color: #f8f8f8;
+    min-height: 100vh;
+}
+
+.save-button {
+    background-color: #A9D9D0;
+    border: none;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin: 10px;
+}
+
+.save-button:hover {
+    color: #0D0D0D;
+    font-weight: 500;
+}
+
+.cancel-button:hover {
+    color: #0D0D0D;
+    font-weight: 500;
+}
+
+
+
+.cancel-button {
+    margin: 10px;
+    background-color:#f8f8f8 ;
+    border: none;
+    padding-left: 15px;
+    padding-right: 15px;
+
+
+}
+
+.orange {
+    color: orange;
+    background-color: orange;
+}
+
+.light-green {
+    color:lightgreen
 }
 </style>
