@@ -40,10 +40,11 @@ import { ref } from 'vue'
 const router = useRouter()
 const toAdd = ref()
 const toLogOut = ref(false)
+const authStore = useAuthStore();
 
 console.log(router.currentRoute.value.name)
 
-
+const img = authStore.user ? authStore.user.photo: ""
 
 const modalLogOut = () => {
     return (toLogOut.value = !toLogOut.value)
@@ -55,7 +56,7 @@ const toAddATask = () => {
 }
 
 
-const authStore = useAuthStore();
+
 // LOG OUT
 const onClick = async () => {
   let logOutResult = await logOut();

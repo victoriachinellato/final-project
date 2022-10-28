@@ -2,14 +2,14 @@
   <NavBar />
   <!-- create profile -->
   <div v-if="!authStore.user">
-    <div class="box">
-      <h1 class="is-size-3">Create your profile</h1>
+    <div class="box edit-box">
+      <h1 class="is-size-3 m-3">Create your profile</h1>
       <form @submit.prevent="toSave">
-        <p>user name</p>
-        <input class="input" v-model="name" type="text" />
-        <p>user picture</p>
-        <div class="file">
-          <label class="file-label">
+        <p class="has-text-centered has-text-weight-semibold ">User name:</p>
+        <input class="input M-3" v-model="name" type="text" />
+        <p class="has-text-centered has-text-weight-semibold ">New user picture:</p>
+        <div class="file is-flex is-justify-content-center">
+          <label class="file-label M-3">
             <input
               class="file-input"
               @change="handleFileUpload"
@@ -25,8 +25,11 @@
             </span>
           </label>
         </div>
+        <div>
+            <img  class="profile-image" :src="img" alt="" />
+            </div>
 
-        <button class="button" type="submit">save</button>
+        <button class="button" :class="{ 'is-loading': isloading }" type="submit">Save</button>
       </form>
     </div>
   </div>
