@@ -8,7 +8,8 @@
         <router-link class="has-text-weight-bold router-link" :class="{'prueba': router.currentRoute.value.name === 'user'}" :to="{ name: 'user' }">Profile</router-link>
         <!-- <button @click="toAddATask" class="button add-button">Add a new task</button> -->
         <div class="logout-div">
-            <img :src="authStore.user.photo" alt="" class="logout-img">
+            <img v-if=authStore.user :src="img" alt="" class="logout-img">
+            <img v-if=!authStore.user class="logout-img" src="../../images/download.jpg">
             <button class="button logout-button" @click="modalLogOut"> <i class="fa-solid fa-arrow-right-from-bracket is-size-5"></i></button>
         </div>
         

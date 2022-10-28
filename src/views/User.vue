@@ -106,7 +106,7 @@
 import NavBar from "../components/NavBar.vue";
 import { useAuthStore } from "../store/auth";
 import { saveUser, updateUser, getUser } from "../api";
-import { ref } from "vue";
+import { ref, onMounted} from "vue";
 import { formatRelativeTime, justDate } from "../helpers/dates";
 import moment from "moment";
 import { useRouter } from "vue-router";
@@ -124,6 +124,14 @@ const authStore = useAuthStore();
 const date = authStore.user
   ? moment(authStore.user.created_at).format("MMM Do, YYYY")
   : "";
+
+
+  onMounted(async() => {
+  if (!authStore.isAuth) {
+    router.push( {name: 'login'})
+  }
+})
+
 
 console.log(authStore.user);
 
@@ -166,10 +174,7 @@ const toSave = async () => {
 };
 </script>
 <style scoped>
-.profile-card {
-  /* max-width: 350px;
-  min-width: 40%; */
-}
+
 
 .buttons-div {
     display: flex;

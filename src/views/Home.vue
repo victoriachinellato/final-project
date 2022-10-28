@@ -112,6 +112,13 @@ const done = ref()
 const progressBar = ref()
 
 
+onMounted(async() => {
+  if (!authStore.isAuth) {
+    router.push( {name: 'login'})
+  }
+})
+
+
 
 
 
